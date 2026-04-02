@@ -20,11 +20,11 @@ const Navbar = () => {
           <Link href="/find-workers" className="text-sm font-medium text-muted hover:text-primary transition-colors">
             Find Workers
           </Link>
+          <Link href="/admin/dashboard" className="text-sm font-medium text-muted hover:text-primary transition-colors">
+            Admin Panel
+          </Link>
           <Link href="/how-it-works" className="text-sm font-medium text-muted hover:text-primary transition-colors">
             How it Works
-          </Link>
-          <Link href="/about" className="text-sm font-medium text-muted hover:text-primary transition-colors">
-            About
           </Link>
         </div>
 
@@ -36,7 +36,7 @@ const Navbar = () => {
             Login
           </Link>
           <Link
-            href="/join"
+            href="/worker/onboarding"
             className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             Join as Worker

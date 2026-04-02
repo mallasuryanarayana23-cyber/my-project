@@ -1,4 +1,4 @@
-import React from 'react';
+import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Button from '@/components/ui/Button';
@@ -26,8 +26,12 @@ export default function Home() {
                   SkillMap bridges the hiring gap in India's industrial heartlands. Find skilled workers verified by video and located by GPS, right in your neighborhood.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button size="lg" className="px-10">Find Workers Now</Button>
-                  <Button variant="outline" size="lg" className="px-10">Join as a Worker</Button>
+                  <Link href="/find-workers">
+                    <Button size="lg" className="px-10 w-full sm:w-auto">Find Workers Now</Button>
+                  </Link>
+                  <Link href="/worker/onboarding">
+                    <Button variant="outline" size="lg" className="px-10 w-full sm:w-auto">Join as a Worker</Button>
+                  </Link>
                 </div>
                 
                 <div className="mt-12 flex items-center gap-4 text-sm text-muted">
@@ -158,8 +162,12 @@ export default function Home() {
                 <h2 className="font-display text-4xl font-extrabold mb-6">Ready to scale your workforce?</h2>
                 <p className="text-xl text-muted mb-10 max-w-2xl mx-auto italic">Join the thousands of MSMEs building the future of India's industrial sector with verified talent.</p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button size="lg" variant="primary" className="px-12">Search Workers</Button>
-                    <Button size="lg" variant="outline" className="px-12">Register Industry</Button>
+                    <Link href="/find-workers">
+                        <Button size="lg" variant="primary" className="px-12 w-full sm:w-auto">Search Workers</Button>
+                    </Link>
+                    <Link href="/join">
+                        <Button size="lg" variant="outline" className="px-12 w-full sm:w-auto">Register Industry</Button>
+                    </Link>
                 </div>
             </div>
         </section>
