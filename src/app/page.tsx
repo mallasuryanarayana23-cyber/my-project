@@ -2,174 +2,197 @@ import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Button from '@/components/ui/Button';
-import { Camera, MapPin, ShieldCheck, Users, Briefcase, Zap } from 'lucide-react';
+import { Camera, MapPin, ShieldCheck, Users, Briefcase, Zap, Star, ArrowRight, PlayCircle } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-background font-sans selection:bg-primary/20 selection:text-primary overflow-x-hidden">
       <Navbar />
       
       <main className="flex-grow">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden bg-background py-20 sm:py-32">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="lg:grid lg:grid-cols-12 lg:gap-16">
-              <div className="lg:col-span-7">
-                <div className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary mb-6 animate-fade-in">
-                  <Zap className="mr-2 h-4 w-4" />
+        {/* Advanced Hero Section */}
+        <section className="relative pt-32 pb-24 sm:pt-48 sm:pb-32 overflow-hidden">
+          {/* Dynamic Background Elements */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
+            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[120px] animate-pulse" />
+            <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] rounded-full bg-success/5 blur-[100px] animate-pulse delay-700" />
+          </div>
+
+          <div className="container mx-auto px-6 lg:px-12">
+            <div className="grid lg:grid-cols-12 gap-16 items-center">
+              <div className="lg:col-span-7 z-10">
+                <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-primary mb-8 animate-in fade-in slide-in-from-left-4 duration-500">
+                  <Zap className="h-3.5 w-3.5 fill-primary" />
                   India's First Verified Skill Network
                 </div>
-                <h1 className="font-display text-4xl font-extrabold tracking-tight text-foreground sm:text-6xl mb-6">
-                  Empowering MSMEs with <span className="text-primary italic">Verified</span> Local Talent.
+                
+                <h1 className="font-display text-5xl font-black tracking-tight text-foreground sm:text-7xl mb-8 leading-[1.05] animate-in fade-in slide-in-from-left-6 duration-700 delay-100">
+                  Fueling MSMEs with <br/>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary/80 to-success italic">Verified</span> Local Talent.
                 </h1>
-                <p className="text-xl text-muted leading-relaxed mb-10 max-w-2xl">
-                  SkillMap bridges the hiring gap in India's industrial heartlands. Find skilled workers verified by video and located by GPS, right in your neighborhood.
+                
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-12 max-w-2xl animate-in fade-in slide-in-from-left-8 duration-700 delay-200">
+                  SkillMap is the trust bridge for India's industrial sector. Find verified workers within 5km, audit their skills via video, and hire with absolute confidence.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4">
+                
+                <div className="flex flex-col sm:flex-row gap-5 animate-in fade-in slide-in-from-left-10 duration-700 delay-300">
                   <Link href="/find-workers">
-                    <Button size="lg" className="px-10 w-full sm:w-auto">Find Workers Now</Button>
+                    <Button size="lg" className="rounded-full px-10 h-16 text-base font-black tracking-tight shadow-2xl shadow-primary/30 group">
+                      FIND WORKERS NOW
+                      <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    </Button>
                   </Link>
                   <Link href="/worker/onboarding">
-                    <Button variant="outline" size="lg" className="px-10 w-full sm:w-auto">Join as a Worker</Button>
+                    <Button variant="outline" size="lg" className="rounded-full px-10 h-16 text-base font-black tracking-tight border-border/50 bg-white/50 backdrop-blur-sm hover:bg-white transition-all">
+                      JOIN AS A WORKER
+                    </Button>
                   </Link>
                 </div>
                 
-                <div className="mt-12 flex items-center gap-4 text-sm text-muted">
-                  <div className="flex -space-x-2">
+                <div className="mt-16 flex items-center gap-6 animate-in fade-in duration-1000 delay-500">
+                  <div className="flex -space-x-3">
                     {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="h-8 w-8 rounded-full border-2 border-background bg-slate-200" />
+                      <div key={i} className="h-12 w-12 rounded-full border-4 border-background overflow-hidden ring-1 ring-border/20">
+                        <img src={`https://i.pravatar.cc/150?u=sk${i}`} alt="User" className="h-full w-full object-cover" />
+                      </div>
                     ))}
                   </div>
-                  <p>Trusted by <span className="font-bold text-foreground">500+</span> MSMEs across industrial hubs.</p>
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-1">
+                      {[1, 2, 3, 4, 5].map((s) => <Star key={s} className="h-3.5 w-3.5 fill-warning text-warning" />)}
+                    </div>
+                    <p className="text-sm font-bold text-muted-foreground">
+                      Trusted by <span className="text-foreground font-black">500+</span> MSMEs in industrial hubs.
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="mt-16 lg:mt-0 lg:col-span-5 relative">
-                <div className="relative rounded-2xl border border-border bg-slate-50 p-4 shadow-2xl overflow-hidden aspect-square flex items-center justify-center">
-                    {/* Placeholder for SkillMap App Interface Mockup */}
-                    <div className="text-center">
-                        <Camera className="mx-auto h-16 w-16 text-primary/40 mb-4" />
-                        <p className="text-sm font-medium text-muted">Video Verification Visualization</p>
+
+              <div className="lg:col-span-5 relative animate-in fade-in zoom-in duration-1000 delay-300 hidden lg:block">
+                <div className="relative group">
+                  {/* Decorative Glow */}
+                  <div className="absolute -inset-1 bg-gradient-to-r from-primary to-success rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                  
+                  {/* Glassmorphic Mockup Container */}
+                  <div className="relative glass-card rounded-[2.5rem] p-4 aspect-[4/5] flex flex-col items-center justify-center overflow-hidden border-white/40 shadow-2xl">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
+                    
+                    <div className="z-10 flex flex-col items-center text-center px-8">
+                       <div className="bg-white/90 p-6 rounded-3xl shadow-xl mb-8 transform group-hover:scale-110 transition-transform duration-500">
+                         <PlayCircle className="h-16 w-16 text-primary fill-primary/10" />
+                       </div>
+                       <h3 className="font-display text-2xl font-black mb-4">Real Skill, Real Videos.</h3>
+                       <p className="text-sm font-bold text-muted-foreground leading-relaxed">
+                         Our V-Trust system captures 30-second skill demos, manually verified by our team.
+                       </p>
                     </div>
+
+                    {/* Floating UI Elements */}
+                    <div className="absolute top-12 -right-6 bg-white p-4 rounded-2xl shadow-xl border border-border/50 animate-bounce delay-700">
+                      <div className="flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-full bg-success/20 flex items-center justify-center">
+                          <ShieldCheck className="h-4 w-4 text-success" />
+                        </div>
+                        <span className="text-xs font-black uppercase text-foreground">Verified Worker</span>
+                      </div>
+                    </div>
+
+                    <div className="absolute bottom-12 -left-6 bg-white p-4 rounded-2xl shadow-xl border border-border/50 animate-bounce">
+                      <div className="flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center">
+                          <MapPin className="h-4 w-4 text-primary" />
+                        </div>
+                        <span className="text-xs font-black uppercase text-foreground">2.4km Near You</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                {/* Decorative blobs */}
-                <div className="absolute -top-4 -right-4 h-24 w-24 rounded-full bg-primary/10 blur-2xl" />
-                <div className="absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-secondary/10 blur-2xl" />
               </div>
             </div>
           </div>
         </section>
 
-        {/* Problem Definition Section */}
-        <section className="bg-slate-50 py-24 sm:py-32 border-y border-border">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl">
-              <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-6 italic">
-                The Gap: Why Traditional Hiring Fails India's MSMEs.
-              </h2>
-              <p className="text-lg text-muted mb-12">
-                India's 63 million MSMEs face a critical talent crunch. Unverified workers lead to security risks and poor quality work, while hyper-local talent remains invisible.
-              </p>
+        {/* Global Impact Grid */}
+        <section className="py-24 bg-slate-50 border-y border-border/50">
+          <div className="container mx-auto px-6 lg:px-12">
+            <div className="max-w-3xl mb-20">
+               <h2 className="font-display text-4xl font-black text-foreground mb-6 leading-tight italic">
+                 The Skill Gap: Resolving India's <br className="hidden md:block" /> Hiring Crisis for MSMEs.
+               </h2>
+               <div className="h-1.5 w-24 bg-primary rounded-full mb-8" />
+               <p className="text-xl font-medium text-muted-foreground">
+                 Traditional job boards serve the white-collar 1%. SkillMap is built for the backbone of India — our workers and small factory owners.
+               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            <div className="grid md:grid-cols-3 gap-10">
               {[
-                { title: "Trust Deficit", desc: "Verifying credentials for daily/monthly labor is expensive and slow.", icon: ShieldCheck },
-                { title: "Discovery Friction", desc: "Finding skilled labor within a 5-10km radius is currently a game of chance.", icon: MapPin },
-                { title: "Quality Mismatch", desc: "Paper resumes don't show real skill. Video evidence does.", icon: Camera }
+                { title: "Trust-as-a-Service", desc: "No more fake credentials. We verify technical skills through physical and video auditing.", icon: ShieldCheck, color: "primary" },
+                { title: "Hyper-Local Precision", desc: "Our PostGIS-powered discovery finds workers within your industrial cluster, cutting transit times.", icon: MapPin, color: "success" },
+                { title: "Video Moat", desc: "Paper resumes lie. Videos don't. See the quality of work before the first interview.", icon: Camera, color: "warning" }
               ].map((item, idx) => (
-                <div key={idx} className="bg-background rounded-xl p-8 border border-border shadow-sm hover:shadow-md transition-all">
-                  <item.icon className="h-10 w-10 text-primary mb-6" />
-                  <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                  <p className="text-muted text-sm leading-relaxed">{item.desc}</p>
+                <div key={idx} className="group relative p-10 bg-white rounded-3xl border border-border/50 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden">
+                  <div className={`absolute top-0 right-0 h-32 w-32 -mr-16 -mt-16 rounded-full bg-${item.color}/5 group-hover:scale-150 transition-transform duration-700`} />
+                  <div className={`h-14 w-14 rounded-2xl bg-${item.color}/10 flex items-center justify-center mb-8`}>
+                    <item.icon className={`h-7 w-7 text-${item.color}`} />
+                  </div>
+                  <h3 className="text-2xl font-black mb-4">{item.title}</h3>
+                  <p className="text-muted-foreground font-bold leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Innovation Section - Unique Features */}
-        <section className="py-24 sm:py-32">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-20">
-              <h2 className="font-display text-4xl font-bold tracking-tight mb-6">Designed for the Next Billion Users.</h2>
-              <p className="text-xl text-muted">We didn't just build a portal; we built a trust engine.</p>
+        {/* Journey - Visual Process */}
+        <section className="py-32 bg-foreground text-background">
+          <div className="container mx-auto px-6 lg:px-12">
+            <div className="text-center mb-24">
+               <h2 className="font-display text-4xl sm:text-6xl font-black mb-8 italic">The SkillMap Pipeline</h2>
+               <p className="text-xl text-background/60 font-bold">Bridging the gap in 3 high-trust steps.</p>
             </div>
-            
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div>
-                <div className="space-y-12">
-                  <div className="flex gap-6">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg">
-                      <Camera className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2">Video Verification (V-Trust)</h3>
-                      <p className="text-muted">Workers upload a live demonstration of their skill. Admins manually verify every video to ensure only genuine talent reaches your shop floor.</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-6">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-secondary text-secondary-foreground shadow-lg">
-                      <MapPin className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2">GPS-Precision Search</h3>
-                      <p className="text-muted">Optimized for hyper-local discovery. Find workers within your industrial cluster, reducing transit times and increasing reliability.</p>
-                    </div>
-                  </div>
 
-                  <div className="flex gap-6">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-foreground shadow-lg">
-                      <ShieldCheck className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2">Admin-Vouched Profiles</h3>
-                      <p className="text-muted">Every worker on SkillMap is more than a profile; they are vouched for by our community of verifiers.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-slate-100 rounded-2xl aspect-video flex items-center justify-center border-2 border-dashed border-slate-300">
-                <span className="text-slate-400 font-medium italic">[ Interactive Map Preview ]</span>
-              </div>
+            <div className="grid lg:grid-cols-3 gap-12">
+               {[
+                 { step: "01", title: "Capture & Vouch", desc: "Worker records their best work. Our AI and Team verify the authenticity." },
+                 { step: "02", title: "Geo-Map Sync", desc: "Profiles are indexed with precise GPS coordinates for instant local visibility." },
+                 { step: "03", title: "Instant Connect", desc: "MSMEs browse, audit videos, and hire directly via SkillMap's secure portal." }
+               ].map((item, idx) => (
+                 <div key={idx} className="relative p-10 rounded-[2rem] bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                    <span className="text-8xl font-black text-white/5 absolute top-4 right-8">{item.step}</span>
+                    <h3 className="text-3xl font-black text-white mb-6 relative z-10">{item.title}</h3>
+                    <p className="text-lg text-white/60 font-bold leading-relaxed relative z-10">{item.desc}</p>
+                 </div>
+               ))}
             </div>
           </div>
         </section>
 
-        {/* User Journey Section */}
-        <section className="bg-primary py-24 sm:py-32 text-primary-foreground overflow-hidden relative">
-            <div className="absolute top-0 right-0 h-full w-1/3 bg-white/5 skew-x-12 transform origin-top" />
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <h2 className="font-display text-4xl font-bold text-center mb-16">The SkillMap Journey</h2>
-                <div className="grid md:grid-cols-3 gap-8">
-                    {[
-                        { step: "01", title: "Worker Upload", desc: "Worker registers with OTP and uploads their skill intro video." },
-                        { step: "02", title: "Admin Verify", desc: "Our team reviews the video and credentials within 24 hours." },
-                        { step: "03", title: "Employer Hire", desc: "MSME finds the worker via GPS and hires with confidence." }
-                    ].map((item, idx) => (
-                        <div key={idx} className="relative p-8 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20">
-                            <span className="absolute -top-4 left-8 bg-white text-primary font-bold px-3 py-1 rounded-full text-sm">Step {item.step}</span>
-                            <h3 className="text-2xl font-bold mb-4 mt-2">{item.title}</h3>
-                            <p className="text-white/80 leading-relaxed">{item.desc}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-24 sm:py-32">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 className="font-display text-4xl font-extrabold mb-6">Ready to scale your workforce?</h2>
-                <p className="text-xl text-muted mb-10 max-w-2xl mx-auto italic">Join the thousands of MSMEs building the future of India's industrial sector with verified talent.</p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link href="/find-workers">
-                        <Button size="lg" variant="primary" className="px-12 w-full sm:w-auto">Search Workers</Button>
-                    </Link>
-                    <Link href="/join">
-                        <Button size="lg" variant="outline" className="px-12 w-full sm:w-auto">Register Industry</Button>
-                    </Link>
-                </div>
-            </div>
+        {/* Final CTA */}
+        <section className="py-32 relative overflow-hidden">
+           <div className="container mx-auto px-6 lg:px-12 text-center relative z-10">
+              <h2 className="font-display text-5xl sm:text-7xl font-black mb-10 leading-tight tracking-tighter">
+                Scale Your Industry with <br className="hidden md:block"/> <span className="text-primary italic">Verified</span> Talent.
+              </h2>
+              <p className="text-xl font-bold text-muted-foreground mb-16 max-w-3xl mx-auto leading-relaxed">
+                SkillMap is already empowering 500+ MSMEs across North & South India. Don't let your shop floor wait anymore.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                 <Link href="/find-workers">
+                   <Button size="lg" className="rounded-full px-16 h-20 text-lg font-black tracking-tight shadow-[0_20px_50px_rgba(79,70,229,0.3)]">
+                     ACCESS WORKFORCE
+                   </Button>
+                 </Link>
+                 <Link href="/login">
+                   <Button variant="outline" size="lg" className="rounded-full px-16 h-20 text-lg font-black tracking-tight border-border/60 hover:bg-slate-50">
+                     REGISTER INDUSTRY
+                   </Button>
+                 </Link>
+              </div>
+           </div>
+           
+           {/* Decorative Grid */}
+           <div className="absolute inset-0 -z-10 opacity-[0.03]" style={{backgroundImage: 'radial-gradient(#000 0.5px, transparent 0.5px)', backgroundSize: '24px 24px'}}></div>
         </section>
       </main>
 
@@ -177,3 +200,4 @@ export default function Home() {
     </div>
   );
 }
+

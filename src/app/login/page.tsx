@@ -1,15 +1,91 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/Button';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import { Phone, ArrowRight, ShieldCheck, MessageSquare } from 'lucide-react';
+import { Phone, ArrowRight, ShieldCheck, MessageSquare, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [step, setStep] = useState<'phone' | 'otp'>('phone');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [otp, setOtp] = useState(['', '', '', '']);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSendOTP = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      // For local development, prepend +91 if not present
+      const formattedPhone = phoneNumber.startsWith('+') ? phoneNumber : `+91${phoneNumber}`;
+      
+      const res = await fetch('/api/auth/otp/send', {
+        method: 'POST',
+        body: JSON.stringify({ phoneNumber: formattedPhone })
+      });
+      const data = await res.json();
+      
+      if (data.success) {
+        setStep('otp');
+      } else {
+        setError(data.error?.message || 'Failed to send OTP');
+      }
+    } catch (err) {
+      setError('Connection refused. Is the server running?');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyOTP = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const formattedPhone = phoneNumber.startsWith('+') ? phoneNumber : `+91${phoneNumber}`;
+      const otpValue = otp.join('');
+
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ phoneNumber: formattedPhone, otp: otpValue })
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        // Store user in local storage for session (or use cookies)
+        localStorage.setItem('skillmap_user', JSON.stringify(data.data.user));
+        localStorage.setItem('skillmap_token', data.data.token);
+
+        // Redirect based on role
+        const role = data.data.user.role;
+        if (role === 'ADMIN') router.push('/admin/verify');
+        else if (role === 'EMPLOYER') router.push('/find-workers');
+        else router.push('/worker/dashboard');
+      } else {
+        setError(data.error?.message || 'Invalid code. Try 1234.');
+      }
+    } catch (err) {
+      setError('Verification failed. Try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleOtpChange = (index: number, value: string) => {
+    if (value.length > 1) return;
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+    
+    // Auto-focus next
+    if (value && index < 3) {
+      const nextInput = document.getElementById(`otp-${index + 1}`);
+      nextInput?.focus();
+    }
+  };
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-50">
@@ -23,6 +99,12 @@ export default function LoginPage() {
             <h1 className="text-3xl font-extrabold tracking-tight mb-2">Welcome Back</h1>
             <p className="text-muted text-sm font-medium">Verify your identity via Secure Phone OTP.</p>
           </div>
+
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-100 rounded-xl text-red-600 text-sm font-bold flex items-center">
+              ⚠️ {error}
+            </div>
+          )}
 
           {step === 'phone' ? (
             <div className="space-y-6">
@@ -43,10 +125,10 @@ export default function LoginPage() {
 
               <Button 
                 className="w-full py-4 text-lg rounded-xl shadow-lg hover:translate-y-[-2px]" 
-                onClick={() => setStep('otp')}
-                disabled={phoneNumber.length !== 10}
+                onClick={handleSendOTP}
+                disabled={phoneNumber.length !== 10 || loading}
               >
-                Send Verification Code <ArrowRight className="ml-2 h-5 w-5" />
+                {loading ? <Loader2 className="animate-spin h-5 w-5" /> : <>Send Verification Code <ArrowRight className="ml-2 h-5 w-5" /></>}
               </Button>
 
               <div className="text-center">
@@ -63,19 +145,29 @@ export default function LoginPage() {
               </div>
               
               <div className="grid grid-cols-4 gap-4">
-                {[1, 2, 3, 4].map((i) => (
+                {otp.map((value, i) => (
                   <input 
                     key={i}
+                    id={`otp-${i}`}
                     type="text"
                     maxLength={1}
                     className="w-full aspect-square text-center text-2xl font-bold bg-slate-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-inner"
-                    defaultValue={i === 1 ? '5' : ''}
+                    value={value}
+                    onChange={(e) => handleOtpChange(i, e.target.value)}
                   />
                 ))}
               </div>
 
-              <Button className="w-full py-4 text-lg rounded-xl shadow-lg hover:translate-y-[-2px]">
-                Verify & Login
+              <div className="text-center text-xs font-bold text-emerald-600 bg-emerald-50 py-2 rounded-lg">
+                HINT: Use '1234' for this preview
+              </div>
+
+              <Button 
+                className="w-full py-4 text-lg rounded-xl shadow-lg hover:translate-y-[-2px]"
+                onClick={handleVerifyOTP}
+                disabled={loading || otp.some(v => !v)}
+              >
+                {loading ? <Loader2 className="animate-spin h-5 w-5" /> : 'Verify & Login'}
               </Button>
 
               <div className="text-center space-y-4">

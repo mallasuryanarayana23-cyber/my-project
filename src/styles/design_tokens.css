@@ -1,0 +1,39 @@
+@layer base {
+  :root {
+    /* Core Palette: Trust & Professionalism */
+    --primary: 243 75% 59%; /* Indigo-600 */
+    --primary-foreground: 0 0% 100%;
+    
+    /* Verified Success: Emerald Green */
+    --success: 161 94% 30%; /* Emerald-700 */
+    --success-foreground: 161 94% 95%;
+    
+    /* Action & Alerts: Amber */
+    --warning: 38 92% 50%; /* Amber-500 */
+    --warning-foreground: 38 92% 10%;
+    
+    /* Backgrounds & Surfaces */
+    --background: 210 40% 98%; /* Slate-50 */
+    --foreground: 222 47% 11%;
+    
+    /* Glassmorphism Tokens */
+    --surface-glass: rgba(255, 255, 255, 0.7);
+    --glass-blur: 16px;
+    --glass-border: rgba(255, 255, 255, 0.3);
+    
+    /* Radius & Spacing */
+    --radius-xl: 1.5rem;
+    --radius-2xl: 2rem;
+  }
+
+  .glass-card {
+    background: var(--surface-glass);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  }
+
+  .premium-shadow {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+  }
+}

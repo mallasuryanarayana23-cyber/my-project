@@ -1,45 +1,52 @@
 import React from 'react';
 import Link from 'next/link';
+import LanguageToggle from '@/components/ui/LanguageToggle';
 
 const Navbar = () => {
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-2">
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary font-display text-lg font-bold text-primary-foreground">
+    <nav className="fixed top-4 left-0 right-0 z-50 mx-auto max-w-[1400px] px-4 md:px-8">
+      <div className="flex h-20 items-center justify-between rounded-[2.5rem] border border-white/30 bg-white/60 px-8 py-2 backdrop-blur-2xl shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] transition-all hover:bg-white/70">
+        <div className="flex items-center gap-12">
+          <Link href="/" className="flex items-center space-x-3 group">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary font-display text-xl font-black text-white shadow-lg shadow-primary/20 transition-transform group-hover:scale-105">
               S
             </div>
-            <span className="font-display text-xl font-bold tracking-tight text-foreground">
+            <span className="font-display text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary">
               SkillMap
             </span>
           </Link>
+
+          <div className="hidden lg:flex lg:items-center lg:gap-10">
+            <Link href="/find-workers" className="text-sm font-bold text-muted hover:text-primary transition-all hover:underline decoration-primary decoration-2 underline-offset-4">
+              Find Workers
+            </Link>
+            <Link href="/admin/dashboard" className="text-sm font-bold text-muted hover:text-primary transition-all hover:underline decoration-primary decoration-2 underline-offset-4">
+              Admin Panel
+            </Link>
+            <Link href="/how-it-works" className="text-sm font-bold text-muted hover:text-primary transition-all hover:underline decoration-primary decoration-2 underline-offset-4">
+              How it Works
+            </Link>
+          </div>
         </div>
 
-        <div className="hidden md:flex md:items-center md:gap-8">
-          <Link href="/find-workers" className="text-sm font-medium text-muted hover:text-primary transition-colors">
-            Find Workers
-          </Link>
-          <Link href="/admin/dashboard" className="text-sm font-medium text-muted hover:text-primary transition-colors">
-            Admin Panel
-          </Link>
-          <Link href="/how-it-works" className="text-sm font-medium text-muted hover:text-primary transition-colors">
-            How it Works
-          </Link>
-        </div>
+        <div className="flex items-center gap-6">
+          <div className="hidden sm:block">
+            <LanguageToggle />
+          </div>
+          
+          <div className="h-8 w-[1px] bg-border/50 hidden sm:block"></div>
 
-        <div className="flex items-center gap-4">
           <Link 
             href="/login" 
-            className="text-sm font-semibold text-foreground hover:text-primary transition-colors"
+            className="text-sm font-bold text-foreground hover:text-primary transition-colors px-4 py-2"
           >
             Login
           </Link>
           <Link
             href="/worker/onboarding"
-            className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="rounded-full bg-primary px-8 py-3 text-sm font-black text-white shadow-xl shadow-primary/30 hover:bg-primary/90 hover:scale-105 active:scale-95 transition-all focus:outline-none ring-offset-2 focus:ring-2 ring-primary"
           >
-            Join as Worker
+            JOIN AS WORKER
           </Link>
         </div>
       </div>
@@ -48,3 +55,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

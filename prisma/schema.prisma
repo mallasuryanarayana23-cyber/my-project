@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  WORKER
+  EMPLOYER
+  ADMIN
+}
+
+enum VerificationStatus {
+  PENDING
+  REVIEWING
+  VERIFIED
+  REJECTED
+}
+
+model User {
+  id            String    @id @default(uuid())
+  phoneNumber   String    @unique
+  role          Role      @default(WORKER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  workerProfile WorkerProfile?
+  employerProfile EmployerProfile?
+}
+
+model WorkerProfile {
+  id            String    @id @default(uuid())
+  user          User      @relation(fields: [userId], references: [id])
+  userId        String    @unique
+  name          String
+  bio           String?
+  skills        String[]
+  // Geo-location search requires PostGIS, we use Unsupported for spatial types in Prisma
+  // We handle insertion/querying via raw SQL
+  location      Unsupported("geometry(Point, 4326)")?
+  status        VerificationStatus @default(PENDING)
+  videoUrl      String?
+  rating        Float     @default(0)
+  reviewCount   Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model EmployerProfile {
+  id            String    @id @default(uuid())
+  user          User      @relation(fields: [userId], references: [id])
+  userId        String    @unique
+  industryName  String
+  location      Unsupported("geometry(Point, 4326)")?
+  jobs          Job[]
+  createdAt     DateTime  @default(now())
+}
+
+model Job {
+  id            String    @id @default(uuid())
+  employer      EmployerProfile @relation(fields: [employerId], references: [id])
+  employerId    String
+  title         String
+  description   String
+  skillRequired String
+  location      Unsupported("geometry(Point, 4326)")?
+  salaryRange   String?
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+}
